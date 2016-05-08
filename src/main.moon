@@ -1,8 +1,16 @@
 screen = require 'screen'
 mouseAndTouch = require 'mouseAndTouch'
 
+la = love.audio
+le = love.event
+lg = love.graphics
+lw = love.window
+
 local round, play
 local doneSfx, tickSfx
+local font, sfx, save, W, H, W2, H2, w, h, iw, ih
+local rest, exercises, exerciseSecs, restSecs, atRest, running, currEx
+local iw, ih, img
 
 round = (num, idp) ->
   mult = 10^(idp or 0)
@@ -18,15 +26,15 @@ play = (isDone) ->
     s\stop!
   s\play!
 
-la = love.audio
-le = love.event
-lg = love.graphics
-lw = love.window
 t = 0
-local font, sfx, save, W, H, w, h
-local rest, exercises, exerciseSecs, restSecs, atRest, running, currEx
 
-local iw, ih, img
+W = 400
+H = 400
+W2 = W / 2
+H2 = H / 2
+
+iw = 400
+ih = 400
 
 atRest = true
 running = true
@@ -64,8 +72,8 @@ love.load = () ->
     imgs[i] = lg.newImage "images/#{i}.png"
 
   lw.setTitle '7 min workout'
-  W, H = screen.getHighestResolution!
-  screen.setSize W, H, 400, 400
+  w, h = screen.getHighestResolution!
+  screen.setSize w, h, W, H
 
 
 love.update = (dt) ->
@@ -93,6 +101,14 @@ love.update = (dt) ->
 
 
 love.draw = () ->
+  local pi2, r, y1, y2, y3, dy, action
+  dy = 20
+  y1 = dy * 1
+  y2 = dy * 2
+  y3 = H - dy * 2.5
+
+  pi2 = 3.1415927*2
+
   screen.startDraw!
 
   lg.setColor 255, 255, 255
@@ -101,36 +117,43 @@ love.draw = () ->
   if atRest
     lg.setBlendMode 'alpha', 'premultiplied'
     lg.setColor 96, 96, 96--, 0.5
-    lg.draw imgs[currEx], 200, 200, 0, 0.75, 0.75, 200, 200
+    lg.draw imgs[currEx], W2, H2, 0, 0.75, 0.75, iw/2, ih/2
     lg.setBlendMode 'alpha', 'alphamultiply'
   else
-    lg.draw imgs[currEx], 200, 200, 0, 0.75, 0.75, 200, 200
+    lg.draw imgs[currEx], W2, H2, 0, 0.75, 0.75, iw/2, ih/2
 
-  local pi2, r
-  pi2 = 3.1415927*2
   lg.setLineWidth 5
   top = if atRest then restSecs else exerciseSecs
 
   -- task ring
   lg.setColor 200, 0, 200
   r = currEx/12
-  lg.arc 'line', 'open', 200, 200, 197.5, pi2, (1-r) * pi2, 64
+  if atRest
+    r -= 1/24
+  lg.arc 'line', 'open', W2, H2, 197.5, pi2, (1-r) * pi2, 64
 
   -- secs ring
   lg.setColor 0, 200, 200
   r = t / top
-  lg.arc 'line', 'open', 200, 200, 192.5, pi2, (1-r) * pi2, 64
+  lg.arc 'line', 'open', W2, H2, 192.5, pi2, (1-r) * pi2, 64
 
   -- labels
   lg.setColor 255, 255, 255
 
-  if atRest
-    lg.print "#{rest} (#{exercises[currEx]})", 0, 20
-  else
-    lg.print exercises[currEx], 0, 20
-
   tt = top - t
-  lg.print "time left: #{round(tt, 2)}", 0, 0
+  lg.printf "time left: #{round(tt, 0)}", 0, y1, W, 'center'
+
+  if atRest
+    lg.printf "#{rest} (#{exercises[currEx]})", 0, y2, W, 'center'
+  else
+    lg.printf exercises[currEx], 0, y2, W, 'center'
+
+  if running
+    action = 'pause'
+  else
+    action = 'resume'
+
+  lg.printf "click/touch to #{action}", 0, y3, W, 'center'
 
   screen.endDraw!
 

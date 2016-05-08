@@ -17,3 +17,15 @@ http://7-min.com/help/
 Additional reference:
 
 * http://lua-users.org/wiki/TablesTutorial
+
+
+## TODO
+
+* exit button at a corner
+* custom fonts:
+  * arial/helvetica bold for 0-9 timer (bigger size)
+  * some sans-serif font for the remaining print
+* (maybe) register your name, send events
+    1) start of routine
+    2) routine complete
+    -> so one can see on the web the frequency of applying the routine
