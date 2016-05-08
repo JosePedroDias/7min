@@ -1,0 +1,5 @@
+dist
+src/*.lua
+src/images
+src/sounds
+.DS_Store
