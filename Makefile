@@ -1,6 +1,13 @@
 .PHONY: run-src moon symbolics clean dist run-dist
 
-love = /Applications/love.app/Contents/MacOS/love
+#love = /Applications/love.app/Contents/MacOS/love
+#mmonc = moonc
+#open = open
+
+love = "C:\\Program Files\\LOVE\\lovec"
+moonc = "C:\\Users\\josep\\Work\\OTHER\\moonscript\\moonc"
+open = explorer
+
 rootd = `pwd`
 srcd = "$(rootd)/src"
 gamename = 7min.love
@@ -9,7 +16,7 @@ run-src: moon
 	$(love) $(srcd)
 
 moon:
-	moonc src/*.moon
+	$(moonc) src/*.moon
 
 symbolics:
 	@cd src && ln -s ../assets/images images && cd ..
@@ -24,4 +31,4 @@ dist: moon
 	@cd assets && zip -9 -q -r ../dist/$(gamename) . && cd ..
 
 run-dist: dist
-	open dist/$(gamename)
+	$(open) dist/$(gamename)

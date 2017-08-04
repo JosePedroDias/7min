@@ -7,6 +7,8 @@ to do an app which can run on android.
 
 Media from [7-min.com](http://7-min.com).
 
+Windows compilation support added.
+
 
 ## Summary of exercises:
 
@@ -20,6 +22,10 @@ Additional reference:
 
 
 ## TODO
+
+* windows & surface
+  * resolution not ok (hi res)
+  * audio doesn't play?
 
 * exit button at a corner
 * custom fonts:

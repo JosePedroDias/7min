@@ -66,13 +66,14 @@ imgs = {}
 love.load = () ->
   font = lg.newImageFont 'images/font1.png', " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\""
   lg.setFont font
-  tickSfx = la.newSource 'sounds/tick.wav', 'static'
-  doneSfx = la.newSource 'sounds/done.wav', 'static'
+  tickSfx = la.newSource 'sounds/tick.ogg', 'static'
+  doneSfx = la.newSource 'sounds/done.ogg', 'static'
   for i = 1, 12
     imgs[i] = lg.newImage "images/#{i}.png"
 
   lw.setTitle '7 min workout'
   w, h = screen.getHighestResolution!
+  --w, h = 640,480 -- @TODO change due to windows problems
   screen.setSize w, h, W, H
 
 
