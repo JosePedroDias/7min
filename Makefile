@@ -7,7 +7,7 @@ rootd = `pwd`
 srcd = "$(rootd)/src"
 gamename = 7min.love
 
-run-src: symbolics
+run-src:# symbolics
 	$(love) $(srcd)
 
 symbolics:

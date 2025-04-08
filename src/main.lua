@@ -33,8 +33,8 @@ W = 400
 H = 400
 W2 = W / 2
 H2 = H / 2
-iw = 400
-ih = 400
+iw = 200
+ih = 200
 atRest = true
 running = true
 exerciseSecs = 30
@@ -113,6 +113,7 @@ love.draw = function()
   screen.startDraw()
   lg.setColor(255, 255, 255)
   lg.rectangle('fill', 0, 0, W, H)
+
   if atRest then
     lg.setBlendMode('alpha', 'premultiplied')
     lg.setColor(96, 96, 96)
@@ -121,13 +122,16 @@ love.draw = function()
   else
     lg.draw(imgs[currEx], W2, H2, 0, 0.75, 0.75, iw / 2, ih / 2)
   end
+
   lg.setLineWidth(5)
   local top
+
   if atRest then
     top = restSecs
   else
     top = exerciseSecs
   end
+
   lg.setColor(200, 0, 200)
   r = currEx / 12
   if atRest then
@@ -140,16 +144,19 @@ love.draw = function()
   lg.setColor(255, 255, 255)
   local tt = top - t
   lg.printf("time left: " .. tostring(round(tt, 0)), 0, y1, W, 'center')
+
   if atRest then
     lg.printf(tostring(rest) .. " (" .. tostring(exercises[currEx]) .. ")", 0, y2, W, 'center')
   else
     lg.printf(exercises[currEx], 0, y2, W, 'center')
   end
+
   if running then
     action = 'pause'
   else
     action = 'resume'
   end
+  
   lg.printf("click/touch to " .. tostring(action), 0, y3, W, 'center')
   return screen.endDraw()
 end

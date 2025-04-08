@@ -13,14 +13,18 @@ local canvas
 
 local getHighestResolution
 getHighestResolution = function()
-  local wi, hi, area = 640, 480, 0
-  local modes = lw.getFullscreenModes()
-  for _, m in ipairs(modes) do
-    local areaT = m.width * m.height
-    if areaT > area then
-      wi = m.width
-      hi = m.height
-      area = areaT
+  --local wi, hi, area = 640, 480, 0
+  local wi, hi, area = 1280, 800, 0
+  if false then
+    local modes = lw.getFullscreenModes()
+    for _, m in ipairs(modes) do
+      --print(m.width, m.height)
+      local areaT = m.width * m.height
+      if areaT > area then
+        wi = m.width
+        hi = m.height
+        area = areaT
+      end
     end
   end
   return wi, hi
